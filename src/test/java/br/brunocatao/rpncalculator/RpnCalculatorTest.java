@@ -72,7 +72,7 @@ public class RpnCalculatorTest {
     }
     
     @Test
-    public void itShouldDiviceTwoValuesAndUpdateTheCurrentValue() {
+    public void itShouldDivideTwoValuesAndUpdateTheCurrentValue() {
         calc.push(3);
         calc.push(2);
         assertEquals(BigDecimal.valueOf(3.0 / 2.0), calc.divide());
