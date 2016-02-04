@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * This is RPN Calculator's entry point. This class should be executed without
+ * any command line parameters. It will use the standard input and output to
+ * gather and publish information, respectively.
+ * 
  * @author Bruno Catao
  */
 public class Main {

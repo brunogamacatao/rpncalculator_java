@@ -14,6 +14,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Those are the unit tests for Interpreter class.
+ * 
  * @author Bruno Catao
  */
 public class InterpreterTest {

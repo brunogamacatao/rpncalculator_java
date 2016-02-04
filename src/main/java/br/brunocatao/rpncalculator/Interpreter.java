@@ -13,6 +13,9 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.math.NumberUtils.isNumber;
 
 /**
+ * This class implements the RPN Calculator's protocol. It supports both serial
+ * command execution and streammed execution.
+ * 
  * @author Bruno Catao
  */
 public class Interpreter {
@@ -30,12 +33,20 @@ public class Interpreter {
         initOperators();
     }
     
+    /**
+     * This method executes one command at the interpreter.
+     * 
+     * @param command The command to be executed.
+     * @return The result of the command execution.
+     * @throws StoppedInterpreterException if the interpreter is stopped
+     * @throws InvalidCommandException if an invalid command is supplied
+     */
     public String execute(String command) {
         if (!isRunning()) {
             throw new StoppedInterpreterException();
         }
         
-        command = command.trim();
+        command = command.trim(); // The command is trimmed by default
         
         if (isNumber(command)) {
             calculator.push(new BigDecimal(command));
@@ -44,7 +55,7 @@ public class Interpreter {
         } else if (isQuitCommand(command)) {
             running = false;
         } else if (isEmpty(command)) {
-            // Simply ignore
+            // An empty command is simply ignored
         } else {
             throw new InvalidCommandException();
         }
@@ -52,19 +63,34 @@ public class Interpreter {
         return calculator.getCurrentValue().toString();
     }
     
+    /**
+     * This is the streammed version of the execute method. Any execution errors
+     * will be pushed to output stream insted of raising an exception.
+     * 
+     * @param input The input stream for the interpreter.
+     * @param output The output stream where results will be pushed.
+     * @throws IOException This exception will be only thrown if the input 
+     * output streams are not functional.
+     */
     public void execute(BufferedReader input, PrintStream output) throws IOException {
         String line;
         while ((line = input.readLine()) != null) {
             try {
                 String result = execute(line);
+                
+                /* It breaks the execution, in case of interpreter stop, before
+                 * appending an output. */
                 if (!isRunning()) break;
+                
                 output.println(result);
             } catch (RpnCalculatorException ex) {
+                // Exceptions are pushed to output stream insted of being thrown
                 output.println(ex.getLocalizedMessage());
             }
         }
     }
     
+    // Below are simple utility methods
     public boolean isRunning() {
         return running;
     }
@@ -77,6 +103,7 @@ public class Interpreter {
         return QUIT_COMMAND.equals(command);
     }
     
+    // This method initializes an operator map with their respective functions
     private void initOperators() {
         operators.put("+", () -> calculator.add());
         operators.put("-", () -> calculator.subtract());

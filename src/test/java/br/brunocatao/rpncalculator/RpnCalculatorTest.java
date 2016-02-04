@@ -7,6 +7,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Those are the unit tests for RpnCalculator class.
+ * 
  * @author Bruno Catao
  */
 public class RpnCalculatorTest {
