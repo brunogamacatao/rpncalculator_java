@@ -5,7 +5,7 @@ It is written in Java programming language version 1.8.x, it has  message intern
 
 ## Dependencies
 
-The code relies on only onde compilation dependency: Apache Commons Lang, it is used only to perform a clean check whether a string is numeric or not.
+The code relies on only one compilation dependency: Apache Commons Lang, it is used only to perform a clean check whether a string is numeric or not.
 
 ## Building the Project
 
